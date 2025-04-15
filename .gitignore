@@ -1,0 +1,17 @@
+# Python
+*.pyc
+__pycache__
+
+# Streamlit
+/.streamlit/
+
+# Docker
+*.log
+Dockerfile
+docker-compose.yml
+
+# Data files
+/data/*.csv
+
+# Virtual environment
+venv/
