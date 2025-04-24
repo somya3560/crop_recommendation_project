@@ -1,23 +1,24 @@
-# app.py
 import streamlit as st
 import pickle
 import numpy as np
 
 # Load model
-with open('model.pkl', 'rb') as file:
+with open("model.pkl", "rb") as file:
     model = pickle.load(file)
 
-# App title
 st.title("🌾 Crop Recommendation System")
-st.markdown("Give temperature, humidity, and soil moisture to get the best crop recommendation.")
 
 # Input fields
-temperature = st.number_input("🌡️ Temperature (°C)", min_value=0.0, step=0.1)
-humidity = st.number_input("💧 Humidity (%)", min_value=0.0, step=0.1)
-soil_moisture = st.number_input("🌱 Soil Moisture (%)", min_value=0.0, step=0.1)
+N = st.slider("Nitrogen", 0, 140)
+P = st.slider("Phosphorous", 5, 145)
+K = st.slider("Potassium", 5, 205)
+temperature = st.slider("Temperature (°C)", 8, 45)
+humidity = st.slider("Humidity (%)", 10, 100)
+ph = st.slider("pH", 3.5, 9.5)
+rainfall = st.slider("Rainfall (mm)", 20, 300)
 
-# Prediction
+# Predict
 if st.button("Recommend Crop"):
-    input_data = np.array([[temperature, humidity, soil_moisture]])
-    prediction = model.predict(input_data)[0]
-    st.success(f"✅ Recommended Crop: **{prediction}**")
+    input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+    prediction = model.predict(input_data)
+    st.success(f"🌱 Recommended Crop: {prediction[0]}")
